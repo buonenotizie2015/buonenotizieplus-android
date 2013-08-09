@@ -1,4 +1,4 @@
-buonenotizieplus-android
-========================
+BuoneNotizie Plus
+===============
 
-L'applicazione Android di BuoneNotizie Plus
+BuoneNotizie Plus pubblicherà a tuo nome le notizie che riterrai essere davvero buone.

@@ -1,0 +1,63 @@
+<h1>androidflurry Module</h1>
+<h2>Description</h2>
+<p>Flurry v3.0.5 for android. Wrapper to the Flurry SDK for android. Refer to the Flurry SDK API for more info.</p>
+<h2>Accessing the androidflurry Module</h2>
+<p>To access this module from JavaScript, you would do the following:</p>
+<pre><code>var androidflurry = require("sg.flurry");
+</code></pre>
+<p>The androidflurry variable is a reference to the Module object. </p>
+<h2>Functions</h2>
+<h3>sg.flurry.onStartSession(apiKey)</h3>
+<h3>sg.flurry.onEndSession()</h3>
+<p>Must be called for each onStartSession</p>
+<h3>sg.flurry.setContinueSessionMillis(milliseconds)</h3>
+<h3>sg.flurry.logEvent(eventId, parameters)</h3>
+<p>Paramaters is a hash and is optional</p>
+<p>Use logEvent to track user events that happen during a session. You can track how many times each event occurs, what order events happen in, as well as what the most common parameters are for each event.</p>
+<p>This can be useful for measuring how often users take various actions, or what sequences of actions they usually perform.</p>
+<p>Each application supports a maximum of 100 events, and each event id, parameter key, and parameter value must be no more than 255 characters in length. Each event can have no more than 10 parameters. The parameter argument is optional, and may be null. </p>
+<h3>sg.flurry.onError(errorId, message, errorClass)</h3>
+<p>Use onError to report application errors. Flurry will report the first 10 errors to occur in each session.</p>
+<h3>sg.flurry.onPageView()</h3>
+<p>Use onPageView to report page view count. You should call this method whenever a new page is shown to the user to increment the total count. Page view is tracked separately from events. </p>
+<h3>sg.flurry.setUserID(string)</h3>
+<p>Use this to log the user's assigned ID or username in your system. </p>
+<h3>sg.flurry.setAge(int)</h3>
+<p>Use this to log the user's age. Valid inputs are between 1 and 109. </p>
+<h3>sg.flurry.setGender(byte)</h3>
+<p>Use this to log the user's gender. Valid inputs are sg.flurry.MALE or sg.flurry.FEMALE</p>
+<h3>sg.flurry.setReportLocation(bool)</h3>
+<p>To disable/enable detailed location reporting even when your app has permission. Enabled by default.</p>
+<h2>Constant</h2>
+<h3>sg.flurry.MALE</h3>
+<p>Used with the setGender function</p>
+<h3>sg.flurry.FEMALE</h3>
+<p>Used with the setGender function</p>
+<h2>Usage</h2>
+<p>Add this to your tiapp.xml</p>
+<pre><code>&lt;modules&gt;
+    &lt;module version="1.2" platform="android"&gt;sg.flurry&lt;/module&gt;
+&lt;/modules&gt;
+</code></pre>
+<p>Sample app.js</p>
+<pre><code>var flurry = require('sg.flurry');
+flurry.onStartSession('&lt;&lt; YOUR API KEY HERE &gt;&gt;');
+flurry.logEvent('started', {start: 'value'});
+flurry.onError('someerror', 'no crash', 'eClass');
+flurry.setUserId('tester');
+flurry.setAge(10);
+flurry.setGender(flurry.MALE); //or use flurry.FEMALE
+flurry.onPageView();
+flurry.onEndSession(); //make sure you call this or the events won't be set
+
+var win1 = Titanium.UI.createWindow({  
+    title:'Tab 1',
+    backgroundColor:'#fff'
+});
+
+win1.open();
+</code></pre>
+<h2>Author</h2>
+<p>Tommy Leung</p>
+<h2>License</h2>
+<p>The MIT License (MIT)</p>

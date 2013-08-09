@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0
+apiversion: 2
+description: Easily add social sharing to your iOS and Android Titanium apps.
+author: Exygy - Pierre Hunault
+license: This software is licensed under Apache License Version 2.0, January 2004
+copyright: Copyright (c) 2013 by Exygy
+
+
+# these should not be edited
+name: android
+moduleid: com.exygy.socialshare
+guid: 2340361a-af5e-40ff-bf28-b70aca60b8a7
+platform: android
+minsdk: 3.1.0.GA

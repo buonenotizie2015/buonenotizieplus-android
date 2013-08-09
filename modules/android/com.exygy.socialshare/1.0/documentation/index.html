@@ -1,0 +1,63 @@
+<h1>ExygySocialShare Module</h1>
+<h2>Description</h2>
+<pre><code>Easily add social sharing to your iOS and Android Titanium apps. 
+Share to Facebook, Twitter or Google+ (more networks coming soon!). 
+Very simple implementation. Choose to use the "native" sharing user experience or share via a webview. 
+If sharing natively, the plugin will take care of gracefully falling back to a webview if the native 
+apps or OS requirement are not supported by the users device. Questions? We offer support to all paid customers! 
+Email us at TitaniumSocialShare@exygy.com.
+</code></pre>
+<h2>Accessing the android Module</h2>
+<pre><code>To access this module from JavaScript, you would do the following:
+
+var socialShare = require("com.exygy.socialshare");
+
+The socialShare variable is a reference to the Module object.
+</code></pre>
+<h3>ExygySocialShare.function</h3>
+<pre><code>Only one function is available and necessary
+
+socialShare.share(options);
+
+provider: social network name ("facebook", "twitter" or "google+") (note: in "google+", the "+" is important)
+message: optional - pre fill the post
+url: optional - url to include in the post
+app_id: - Google+ on iOs only. Need to be specified for Google+ SDK.
+interface:  
+    iOs:
+        Facebook: optional - "facebook_sdk", "iOS" or "web view" - default: "facebook_sdk"
+        Twitter:  optional - "twitter" or "webview"              - default: "twitter" 
+        Google+:  optional - "google_sdk" or "webview"           - default: "google_sed"
+
+    Android:
+        Facebook: optional - "facebook_sdk" or "web view" - default: "facebook" - Note: on Android, "ios" == "facebook_sdk"
+        Twitter:  optional - "twitter" or "webview"       - default: "twitter"
+        Google+:  optional - "google_sdk" or "webview"    - default: "google_sdk"
+
+    Note: the plugin if the necessary apps are not installed or if the app is not set properly, the plugin will fall 
+          down to whatever interface is available
+
+IMPORTANT: To use the Facebook SDK on iOS:
+    The info.plist file of your project needs to be modified following Facebook instruction:
+    https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/ (Section 5 - last Paragraph)
+    "Add FacebookAppID and FacebookDisplayName to the Info.plist file.
+    Create an array key called URL types with a single array sub-item called URL Schemes. Give this a single item with your app ID prefixed with fb. This is used to ensure the application will receive the callback URL of the web-based OAuth flow. "
+
+    If the info.plist file is not set up properly, the module won't be able to open the Facebook SDK sharing dialog.
+</code></pre>
+<h2>Usage</h2>
+<pre><code>var socialShare = require("com.exygy.socialshare");
+options = {
+    provider: "facebook",
+    url: "http://exygy.com",
+    interface: "ios" 
+}
+socialShare.share(options);
+</code></pre>
+<h2>Author</h2>
+<pre><code>Exygy - Pierre Hunault
+Email us at TitaniumSocialShare@exygy.com
+</code></pre>
+<h2>License</h2>
+<pre><code>This software is licensed under Apache License Version 2.0, January 2004
+</code></pre>
