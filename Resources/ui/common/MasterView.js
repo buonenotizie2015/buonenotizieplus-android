@@ -71,7 +71,7 @@ var createStreamRow = function(item) {
 		},
 		top : 20,
 		left : leftPos,
-		right : 20
+		right : 47
 	});
 	tablerow.add(titleview);
 
@@ -103,6 +103,156 @@ var createStreamRow = function(item) {
 		backgroundImage : '/images/love-bg-table.png'
 	});
 	tablerow.add(scoreview);
+	
+	var scoreViewA = Ti.UI.createLabel({
+		text : score + '  ',
+		textAlign : 'right',
+		backgroundColor : '#555',
+		color : '#fff',
+		font : {
+			fontSize : 10
+		},
+		height : 20,
+		width : 40,
+		right : 0,
+		bottom : 0,
+		backgroundImage : '/images/love-bg-table.png'
+	});	
+	var loveView = Ti.UI.createView({
+		backgroundColor : '#00aeef',
+		height : 42,
+		width:42,
+		bottom : 0,
+		right : 0,
+		viewid : 'loveView'
+	});
+	var loveButton = Titanium.UI.createButton({
+			height : 42,
+			width : 42,
+			right : 0,
+			bottom : 0,
+			backgroundImage : '/images/smile.png',
+			btnid : 'loveButton'
+		});
+	var scoreViewB = Ti.UI.createLabel({
+		text : score,
+		textAlign : 'center',
+		color : '#fff',
+		font : {
+			fontSize : 13
+		},
+		height : 18,
+		width:42,
+		bottom : 0,
+		right : 0,
+		labelid : "loveLabel"
+	});
+	
+	if(Ti.App.Properties.getString('testAB')==1){
+		loveView.add(scoreViewB);
+		loveView.add(loveButton);
+		tablerow.add(loveView);
+	}else{
+		tablerow.add(scoreViewA);
+	}
+	
+	//LOVE BOTTON
+	
+		titleview.text = item.title;
+
+		link = item.link;
+	
+		function showRequestResult(e) {
+			var s = '';
+			if (e.success) {
+				s = "SUCCESS";
+				if (e.result) {
+					s += "; " + e.result;
+				}
+				if (e.data) {
+					s += "; " + e.data;
+				}
+				if (!e.result && !e.data) {
+					s = '"success", but no data from FB.  I am guessing you cancelled the dialog.';
+				}
+			} else if (e.cancelled) {
+				s = "CANCELLED";
+			} else {
+				s = "FAIL";
+				if (e.error) {
+					s += "; " + e.error;
+				}
+			}
+			//alert(s);
+		}
+		
+		var loved = false;
+
+		if (fb.loggedIn) {
+
+			loveButton.enabled = true;
+
+			for (var j in item.loves) {
+				if (fb.uid === item.loves[j].fb_uid) {
+					loveButton.enabled = false;
+					loveButton.backgroundImage = '/images/smile-disabled.png';
+					loved = true;
+				}
+			}
+			if (!loved) {
+				loveButton.enabled = true;
+				loveButton.addEventListener('click', function(e) {
+					
+					var url = "http://buonenotiziemanager.azurewebsites.net/loves/add";
+					var sendData = {};
+					sendData.BNsecretkey = 'buone2013';
+					sendData.fb_uid = fb.uid;
+					sendData.article_id = item.article_id;
+
+					var sendLove = Ti.Network.createHTTPClient({
+						onsendstream : function(e) {
+							loveButton.enabled = false;
+							loveButton.backgroundImage = '/images/smile-disabled.png';
+						},
+						onload : function(e) {
+							if (this.responseText == 'ok') {
+							}
+						},
+						onerror : function(e) {
+							loveButton.enabled = true;
+						},
+						timeout : 5000
+					});
+					sendLove.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					sendLove.open("POST", url);
+					sendLove.send(sendData);
+
+					tracker.trackEvent({
+						category : "love",
+						action : "love-schermata-stream",
+						label : item.title,
+						value : 1
+					});
+					flurry.logEvent('love', {where: "love-schermata-stream"});
+
+					var data = {
+						link : item.link,
+						name : item.title,
+						type : "article",
+						picture : item.image ? item.image : "http://www.buonenotizie.it/buonenotizieplus/icon-bnplus.png",
+						description : item.description
+					};
+					
+					//fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+					scoreViewA.text = String(parseInt(scoreViewA.text)+1);
+					scoreViewB.text = String(parseInt(scoreViewB.text)+1);
+					loveButton.backgroundImage = '/images/smile-disabled.png';
+				});
+			}
+			} else {
+				loveButton.enabled = false;
+				loveButton.backgroundImage = '/images/smile-disabled.png';
+			}
 
 	return tablerow;
 };
@@ -117,10 +267,13 @@ function MasterView() {
 	self.add(table);
 
 	table.addEventListener('click', function(e) {
-		self.fireEvent('itemSelected', {
-			link : e.row.link,
-			itemdata : e.row.item,
-		});
+		if(e.source.viewid != 'loveView' && e.source.btnid != 'loveButton' && e.source.labelid != 'loveLabel'){
+    		self.fireEvent('itemSelected', {
+				link : e.row.link,
+				itemdata : e.row.item,
+			});
+    	}else{
+    	}
 	});
 
 	var lastDistance = 0;

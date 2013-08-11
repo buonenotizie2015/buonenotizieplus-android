@@ -208,6 +208,7 @@ function ArticleWindow() {
 			for (var j in article.loves) {
 				if (fb.uid === article.loves[j].fb_uid) {
 					loveButton.enabled = false;
+					loveButton.backgroundImage = '/images/buttoncuore_news_articolo-disabled.png';
 					loved = true;
 				}
 			}
@@ -224,6 +225,7 @@ function ArticleWindow() {
 					var sendLove = Ti.Network.createHTTPClient({
 						onsendstream : function(e) {
 							loveButton.enabled = false;
+							loveButton.backgroundImage = "/images/buttoncuore_news_articolo-disabled.png";
 						},
 						onload : function(e) {
 							if (this.responseText == 'ok') {
@@ -254,7 +256,8 @@ function ArticleWindow() {
 						description : article.description
 					};
 					
-					fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+					//fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+					loveButton.backgroundImage = "/images/buttoncuore_news_articolo-disabled.png";
 
 				});
 			}

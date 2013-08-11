@@ -58,7 +58,7 @@ function StreamWindow(title) {
         bottom:50,
     });
    	var banner = Titanium.UI.createWebView({
-   		url:'http://www.buonenotizie.it/adv/iphone/banner-iphone.html',
+   		url:'http://www.buonenotizie.it/adv/android/banner-android.html',
    		width:"100%",
    		height:50,
    		left:0,

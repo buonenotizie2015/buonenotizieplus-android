@@ -103,9 +103,10 @@ function ApplicationTabGroup(Categorie,Stream,Top,Profilo) {
 		profiloWin.toolbar = [flexSpace,gotoStream,flexSpace];
 	}
 	
-	self.addTab(tab1);
+	
 	self.addTab(tab2);
 	self.addTab(tab3);
+	self.addTab(tab1);
 	self.addTab(tab4);
 	
 	self.addEventListener("open",function(e){
@@ -115,7 +116,7 @@ function ApplicationTabGroup(Categorie,Stream,Top,Profilo) {
         activity.actionBar.displayHomeAsUp = false; 
         //activity.actionBar.onHomeIconItemSelected = function() {
            	//alert("Home icon clicked!");
-        //};  
+        //};
 	});
 	
 	return self;
