@@ -26,9 +26,9 @@
     <iphone/>
     <property name="ti.android.fastdev" type="bool">false</property>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <tool-api-level>16</tool-api-level>
+        <tool-api-level>17</tool-api-level>
         <manifest android:installLocation="preferExternal"
-            android:versionCode="3" android:versionName="1.0.2">
+            android:versionCode="5" android:versionName="1.0" >
             <supports-screens android:anyDensity="false"/>
             <compatible-screens>
                 <!-- all small size screens -->
@@ -42,8 +42,9 @@
                 <screen android:screenDensity="hdpi" android:screenSize="normal"/>
                 <screen android:screenDensity="xhdpi" android:screenSize="normal"/>
             </compatible-screens>
-            <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="16"/>
-            <application android:theme="@style/Theme.Buonenotizie">
+            <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
+            <application android:theme="@style/Theme.Buonenotizie"
+            	 android:hardwareAccelerated="true">
                 <activity
                     android:configChanges="keyboardHidden|orientation"
                     android:name="org.appcelerator.titanium.TiActivity"

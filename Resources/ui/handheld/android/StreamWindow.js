@@ -56,9 +56,9 @@ function StreamWindow(title) {
         height:2,
         backgroundColor:'#00aeef',
         bottom:50,
-    });
-   	var banner = Titanium.UI.createWebView({
-   		url:'http://www.buonenotizie.it/adv/android/banner-android.html',
+    });    
+   	var banner = Titanium.UI.createButton({
+   		backgroundImage:'/images/banner.png',
    		width:"100%",
    		height:50,
    		left:0,
@@ -74,7 +74,24 @@ function StreamWindow(title) {
        style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
        backgroundColor:"#ccc"
    	});
- 	
+   	
+   	banner.addEventListener('click',function(e){
+   		var intent = Ti.Android.createIntent({
+    		action: Ti.Android.ACTION_VIEW,
+    		data: 'market://details?id=com.BUONENOTIZIE.BuoneNotizie'
+
+		});
+		Ti.Android.currentActivity.startActivity(intent);
+   	
+   		tracker.trackEvent({
+			category : "banner",
+			action : "action",
+			label : "click",
+			value : 1
+		});
+		flurry.logEvent('banner', {what: "click"});
+   	});
+   	 	
 	closeBannerButton.addEventListener('click',function(e){
     	banner.animate({curve:Ti.UI.ANIMATION_CURVE_EASE_IN_OUT, opacity:0, duration:500});
     	closeBannerButton.animate({curve:Ti.UI.ANIMATION_CURVE_EASE_IN_OUT, opacity:0, duration:500});
@@ -95,7 +112,6 @@ function StreamWindow(title) {
 
 	// load initial rss feed
 	self.refreshJSON();
-	
 	
 	return self;
 };

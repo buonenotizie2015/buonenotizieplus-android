@@ -1,5 +1,10 @@
-function ProfiloWindow(title) {
+function ProfiloWizard(title) {
 	/*globals Titanium, Ti, alert, JSON */
+	var Categorie = require('ui/handheld/android/CategorieWindow');
+	var Stream = require('ui/handheld/android/StreamWindow');
+	var Top = require('ui/handheld/android/TopWindow');
+	var Profilo = require('ui/handheld/android/ProfiloWindow');
+	var ApplicationTabGroup = require('ui/common/ApplicationTabGroup');
 
 	var self = Ti.UI.createWindow({
 		backgroundColor : '#fff',
@@ -35,7 +40,6 @@ function ProfiloWindow(title) {
 		textAlign : 'center'
 	});
 	self.add(label);
-	
 
 	var fbButton = Ti.UI.createButton({
 		backgroundImage : fb.loggedIn ? '/images/fb-logout.png' : '/images/fb-login.png',
@@ -49,22 +53,13 @@ function ProfiloWindow(title) {
 	
 	self.reloadStream = false;
 
-	function updateLoginStatus() {
+	function updateLoginStatusWizard() {
 		label.text = 'Il tuo profilo Facebook è connesso. Ora puoi votare e condividere le buone notizie';
 		fbButton.backgroundImage = '/images/fb-logout.png';
-		fbButton.backgroundSelectedImage = '/images/fb-logout-hover.png';
 		
-		self.reloadStream = true;
+		Ti.App.Properties.setBool('BNfirstTour', true);
 		
-		if (fb.loggedIn){
-			fb.requestWithGraphPath('me', {}, 'GET', function(e) {
-				var data = JSON.parse(e.result);
-				flurry.setUserID(fb.uid);
-				if(data.gender="male"){flurry.setGender(flurry.MALE);}else if(data.gender="female"){flurry.setGender(flurry.FEMALE);}else{};
-				var birth_year = parseInt(data.birthday.substr(data.birthday.length - 4));
-				flurry.setAge(2013-birth_year);
-			});	
-		}
+		new ApplicationTabGroup(Categorie, Stream, Top, Profilo).open();
 		
 		tracker.trackSocial({
 			network: "facebook",
@@ -78,39 +73,40 @@ function ProfiloWindow(title) {
 			value : 1
 		});
 	}
-
-	function updateLogoutStatus() {
-		label.text = 'Connetti il tuo profilo su Facebook per votare e condividere le buone notizie';
-		fbButton.backgroundImage = '/images/fb-login.png';
-		fbButton.backgroundSelectedImage = '/images/fb-login-hover.png';
-		self.reloadStream = true;
-		
-		tracker.trackSocial({
-			network: "facebook",
-			action: "logout",
-			target: "profilo"
-		});
-		tracker.trackEvent({
-			category : "accesso",
-			action : "logout",
-			label : "logout-dal-profilo",
-			value : 1
-		});
-		
-	}
-	fb.addEventListener('login', updateLoginStatus);
-	fb.addEventListener('logout', updateLogoutStatus);
-
+	
+	fb.addEventListener('login', updateLoginStatusWizard);
+	
 	fbButton.addEventListener('click', function() {
 		if (fb.loggedIn){
 			fb.logout();
 		} else {
 			fb.authorize();
-		}
-			
+		}	
+	});
+	
+	var buttonLater = Ti.UI.createButton({
+		title : 'Più tardi',
+		textAlign : 'center',
+		color : '#111111',
+		backgroundColor:"#cccccc",
+		backgroundSelectedColor:"#999999",
+		font : {
+			fontSize : 14
+		},
+		height : 50,
+		top: 340,
+		left : 20,
+		right : 20
+	});
+	
+	self.add(buttonLater);
+	
+	buttonLater.addEventListener('click', function() {
+		Ti.App.Properties.setBool('BNfirstTour', true);
+		new ApplicationTabGroup(Categorie, Stream, Top, Profilo).open();	
 	});
 	
 	return self;
 };
 
-module.exports = ProfiloWindow;
+module.exports = ProfiloWizard;

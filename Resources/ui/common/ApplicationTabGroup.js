@@ -60,17 +60,6 @@ function ApplicationTabGroup(Categorie,Stream,Top,Profilo) {
 		systemButton:Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
 	});
 	
-	if(!Ti.App.Properties.getBool('BNfirstTour')){
-		var gotoProfile = Titanium.UI.createButton({
-			title: 'Avanti >'
-		});
-		gotoProfile.addEventListener('click', function(){
-			self.setActiveTab(3);
-		});
-		
-		categorieWin.toolbar = [flexSpace,gotoProfile,flexSpace];
-		}
-	
 	streamWin.addEventListener('focus', function(){
 		if(categorieWin.reloadStream){
 			streamWin.refreshJSON();
@@ -86,38 +75,19 @@ function ApplicationTabGroup(Categorie,Stream,Top,Profilo) {
 		topWin.refreshTopJSON();
 	});
 	
-	if(!Ti.App.Properties.getBool('BNfirstTour')){		
-		var gotoStream = Titanium.UI.createButton({
-			color: '#333',
-			title: 'Avanti >'
-		});
-		gotoStream.addEventListener('click', function(){
-			self.setActiveTab(1);
-			Ti.App.Properties.setBool('BNfirstTour', true);
-			categorieWin.toolbar = null;
-			categorieWin.showTabBar();
-			profiloWin.toolbar = null;
-			profiloWin.showTabBar();
-		});
-		
-		profiloWin.toolbar = [flexSpace,gotoStream,flexSpace];
-	}
-	
-	
 	self.addTab(tab2);
 	self.addTab(tab3);
 	self.addTab(tab1);
 	self.addTab(tab4);
 	
+	if(parseInt(version)>=3){
 	self.addEventListener("open",function(e){
 		var activity = self.activity;
         activity.actionBar.logo = "/images/logo@2x.png";
         activity.actionBar.backgroundImage = "/images/navbar-bg.png";
         activity.actionBar.displayHomeAsUp = false; 
-        //activity.actionBar.onHomeIconItemSelected = function() {
-           	//alert("Home icon clicked!");
-        //};
 	});
+	}
 	
 	return self;
 };

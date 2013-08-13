@@ -243,7 +243,7 @@ var createStreamRow = function(item) {
 						description : item.description
 					};
 					
-					//fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+					fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
 					scoreViewA.text = String(parseInt(scoreViewA.text)+1);
 					scoreViewB.text = String(parseInt(scoreViewB.text)+1);
 					loveButton.backgroundImage = '/images/smile-disabled.png';

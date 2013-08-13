@@ -256,7 +256,7 @@ function ArticleWindow() {
 						description : article.description
 					};
 					
-					//fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+					fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
 					loveButton.backgroundImage = "/images/buttoncuore_news_articolo-disabled.png";
 
 				});
@@ -400,6 +400,16 @@ function ArticleWindow() {
 		flurry.onPageView(titleArticle.text);
 		tracker.trackScreen(titleArticle.text);
 	});
+	
+	if(parseInt(version)>=3){
+	self.addEventListener("open",function(e){
+		var activity = self.activity;
+        activity.actionBar.displayHomeAsUp = true;
+        activity.actionBar.onHomeIconItemSelected = function() {
+           	activity.finish();
+        };
+	});
+	}
 
 	return self;
 }

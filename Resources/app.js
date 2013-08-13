@@ -30,20 +30,7 @@ var GA = require('analytics.google');
 //GA.optOut = true;
 GA.debug = false;
 GA.trackUncaughtExceptions = true;
-var tracker = GA.getTracker("UA-9426666-8");
-
-// receive JS event from the HTML
-Ti.App.addEventListener('link_click', function(e) {
-    var whereto = e._where;
-    Ti.Platform.openURL(whereto);
-    tracker.trackEvent({
-		category : "banner",
-		action : "action",
-		label : "click",
-		value : "click"
-	});
-	flurry.logEvent('banner', {what: "click"});
-});
+var tracker = GA.getTracker("UA-9426666-9");
 
 function randomXToY(minVal,maxVal){ 
 	var randVal = minVal+(Math.random()*(maxVal-minVal)); 
@@ -85,6 +72,13 @@ if(Ti.App.Properties.getString('testAB')==1){
 	var Profilo = require('ui/handheld/android/ProfiloWindow');
 	
 	var ApplicationTabGroup = require('ui/common/ApplicationTabGroup');
-	new ApplicationTabGroup(Categorie, Stream, Top, Profilo).open();
+	var CategorieWizard = require('ui/common/CategorieWizard');
+	
+	
+	if(Ti.App.Properties.getBool('BNfirstTour')){
+		new ApplicationTabGroup(Categorie, Stream, Top, Profilo).open();
+	}else{
+		new CategorieWizard("Benvenuto").open();
+	}
 
 })();
