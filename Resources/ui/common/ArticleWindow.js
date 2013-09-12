@@ -23,21 +23,6 @@ function ArticleWindow() {
 			}
 		}
 	});
-	var closeWebWin = Titanium.UI.createButton({
-		title : 'Close',
-		style : Titanium.UI.iPhone.SystemButtonStyle.PLAIN
-	});
-	webWindow.setLeftNavButton(closeWebWin);
-	closeWebWin.addEventListener('click', function() {
-		webWindow.close();
-	});
-
-	var backbutton = Titanium.UI.createButton({
-		title : '',
-		backgroundImage : '/images/back_home.png',
-		width : 25,
-		height : 16
-	});
 
 	var firstLine = Ti.UI.createView({
 		layout : 'horizontal',
@@ -63,7 +48,7 @@ function ArticleWindow() {
 			fontFamily : 'Georgia'
 		},
 		left : 0,
-		top : 0,
+		top : 10,
 		right : 0,
 		height : 'auto'
 	});
@@ -148,15 +133,11 @@ function ArticleWindow() {
 				label : article.title,
 				value : 1
 			});
-			flurry.logEvent('read-more', {notizia: article.title});
+			flurry.logEvent('read-more', {start: article.title});
+			tapstream.fireEvent('read-more', false,{'notizia': article.title});
 		});
 
-
-		webWindow.barColor = article.parentColor ? article.parentColor : '#333';
-		self.barColor = article.parentColor ? article.parentColor : '#333';
-
 		self.title = article.parentCategory.toUpperCase() + ' | ' + article.category;
-		self.backButtonTitleImage = '/images/home-button.png';
 
 		titleArticle.text = article.title;
 		contentArticle.text = article.description;
@@ -166,8 +147,8 @@ function ArticleWindow() {
 		if (article.image) {
 			image.width = 120;
 			image.image = article.image;
-			titleArticle.left = 10;
-			containerArticle.top = (titleArticle.toImage().height > 90) ? (titleArticle.toImage().height + 30) : 120;
+			titleArticle.left = 0;
+			containerArticle.top = (titleArticle.toImage().height > 90) ? (titleArticle.toImage().height + 30) : 140;
 		} else {
 			image.width = 0;
 			image.image = null;
@@ -246,7 +227,8 @@ function ArticleWindow() {
 						label : article.title,
 						value : 1
 					});
-					flurry.logEvent('love', {where: "love-schermata-articolo"});
+					flurry.logEvent('love', {start: "love-schermata-articolo"});
+					tapstream.fireEvent('test-event', false,{'where': "love-schermata-articolo"});
 
 					var data = {
 						link : article.link,
@@ -304,28 +286,27 @@ function ArticleWindow() {
 		self.add(twitterShare);
 		self.add(mailShare);
 	
-		var datatosend = {};
-		var datanoios6 = {};
+		var datafacebook = {};
 		var datatweet = {};
 		var datatoemail = {};
 	
-			datatosend = {
-				name : article.title,
-				link : article.link,
+			datafacebook = {
+				text : 'Ecco una buona notizia! "' + article.title + '" via #BuoneNotizie Plus @BuoneNotizie.it ',
 				image : article.image,
-				description : article.description
+				url : article.link,
+				title: article.title
 			};
-	
+			
 			datatweet = {
-				text : 'Ecco una buona notizia: "' + article.title + '" via #BuoneNotizie Plus',
+				text : article.title + ' | via #BuoneNotizie Plus @BuoneNotizie_it ',
 				image : article.image,
 				url : article.link
 			};
 			
 			datatoemail = {
-				subject : 'Ecco una buona notizia: "' + article.title + '"',
-				text:'<b>'+article.title+'</b><br/><br/>'+article.link+'<br/><br/>Su <b>BuoneNotizie Plus</b> https://itunes.apple.com/it/app/buonenotizie-plus/id634493144'
-			}
+				subject : 'Finalmente buone notizie! "' + article.title + '"',
+				text:'Ho trovato una buona notizia! Forse può interessarti:<br/><b>'+article.title+'</b><br/><br/>'+article.link+'<br/><br/>Tramite <b>BuoneNotizie Plus</b>, il primo aggregatore di notizie positive!<br/>Scaricalo gratis anche tu da AppStore o Google Play<br/>http://onelink.to/drb5h9'
+			};
 		
 		var ExygySocialShare = require("com.exygy.socialshare");
 
@@ -333,23 +314,24 @@ function ArticleWindow() {
 			
 				optionsFacebook = {
    						provider: "facebook",
-    					url: datatweet.url,
-    					message: datatweet.text
-					}
+    					url: datafacebook.url,
+    					message: datafacebook.text
+				};
 				ExygySocialShare.share(optionsFacebook);
 
 				tracker.trackSocial({
 					network : "facebook",
 					action : "condivisione",
-					target : datatosend.name ? datatosend.name : "non impostato"
+					target : datafacebook.title ? datafacebook.title : "non impostato"
 				});
 				tracker.trackEvent({
 					category : "condividi",
 					action : "facebook",
-					label : datatosend.name,
+					label : datafacebook.title,
 					value : 1
 				});
-				flurry.logEvent('share', {type: "facebook"});
+				flurry.logEvent('share', {start: "facebook"});
+				tapstream.fireEvent('share', false,{'type': "facebook"});
 
 		});
 
@@ -359,21 +341,22 @@ function ArticleWindow() {
    						provider: "twitter",
     					url: datatweet.url,
     					message: datatweet.text
-					}
+				};
 				ExygySocialShare.share(optionsTwitter);
 
 				tracker.trackSocial({
 					network : "twitter",
 					action : "condivisione",
-					target : datatosend.name ? datatosend.name : "non impostato"
+					target : datafacebook.title ? datafacebook.title : "non impostato"
 				});
 				tracker.trackEvent({
 					category : "condividi",
 					action : "twitter",
-					label : datatosend.name,
+					label : datafacebook.title,
 					value : 1
 				});
-				flurry.logEvent('share', {type: "twitter"});
+				flurry.logEvent('share', {start: "twitter"});
+				tapstream.fireEvent('share', false,{'type': "twitter"});
 		});
 		
 		mailShare.addEventListener("click", function() {
@@ -387,14 +370,17 @@ function ArticleWindow() {
 			tracker.trackEvent({
 					category : "condividi",
 					action : "email",
-					label : datatosend.name,
+					label : datafacebook.title,
 					value : 1
 				});
-			flurry.logEvent('share', {type: "email"});
-			
+			flurry.logEvent('share', {start: "email"});	
+			tapstream.fireEvent('share', false,{'type': "email"});
 		});
-		
-	}
+		loveButton=null;
+		facebookShare=null;
+		twitterShare=null;
+		mailShare=null;
+	};
 
 	self.addEventListener('focus', function() {
 		flurry.onPageView(titleArticle.text);
@@ -410,6 +396,12 @@ function ArticleWindow() {
         };
 	});
 	}
+	
+	self.addEventListener('close', function() {
+		self.remove(firstLine);firstLine= null;
+		self.remove(containerArticle);containerArticle=null;
+		self.remove(readButton);readButton=null;
+	});
 
 	return self;
 }

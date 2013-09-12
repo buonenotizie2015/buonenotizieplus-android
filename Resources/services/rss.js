@@ -17,12 +17,12 @@ var MONTH_MAP = {
 
 var getRssText = function(item, key) {
 	return item.getElementsByTagName(key).item(0).text;
-}
+};
 var parseDate = function(dateString) {
 	var dateParts = dateString.split(' ');
 	var timeParts = dateParts[4].split(':');
 	return dateParts[1] + '/' + MONTH_MAP[dateParts[2].toUpperCase()] + ' ' + timeParts[0] + ':' + timeParts[1];
-}
+};
 
 exports.loadRssFeed = function(o, tries) {
 	var data = [];

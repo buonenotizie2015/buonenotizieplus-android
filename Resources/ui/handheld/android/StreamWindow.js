@@ -11,9 +11,7 @@ function StreamWindow(title) {
 		left : 0
 	});
 	
-	self.addEventListener('focus', function() {
-		self.refreshJSON();
-		
+	self.addEventListener('focus', function() {		
     	flurry.onPageView();
     	tracker.trackScreen("Stream");
 	});
@@ -48,7 +46,7 @@ function StreamWindow(title) {
 				masterView.refreshTable(data);
 			}
 		}, pageView);
-	}
+	};
 	
 	//BANNER PUBBLICITARIO
 	var separator = Ti.UI.createView({
@@ -79,7 +77,6 @@ function StreamWindow(title) {
    		var intent = Ti.Android.createIntent({
     		action: Ti.Android.ACTION_VIEW,
     		data: 'market://details?id=com.BUONENOTIZIE.BuoneNotizie'
-
 		});
 		Ti.Android.currentActivity.startActivity(intent);
    	
@@ -89,7 +86,8 @@ function StreamWindow(title) {
 			label : "click",
 			value : 1
 		});
-		flurry.logEvent('banner', {what: "click"});
+		flurry.logEvent('banner', {start: "click"});
+		tapstream.fireEvent('banner', false,{'what': "click"});
    	});
    	 	
 	closeBannerButton.addEventListener('click',function(e){
@@ -103,7 +101,12 @@ function StreamWindow(title) {
 			label : "close",
 			value : 1
 		});
-		flurry.logEvent('banner', {what: "close"});   	
+		flurry.logEvent('banner', {start: "close"});  
+		tapstream.fireEvent('banner', false,{'what': "close"});
+		
+		self.remove(separator);separator=null;
+		self.remove(banner);banner=null;
+			
 	});
 	
 	self.add(separator);

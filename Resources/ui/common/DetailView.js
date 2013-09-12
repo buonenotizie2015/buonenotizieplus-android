@@ -16,11 +16,14 @@ function DetailView() {
 	
 	self.getWebviewTitle = function(){
 		return webviewTitle;
-	}
+	};
 	
 	webview.addEventListener('load', function(e) {
 		webviewTitle = webview.evalJS("document.title");
 		self.fireEvent('articleLoaded'); 
+	});
+	webview.addEventListener('close', function(e) {
+		self.remove(webview);webview=null;
 	});
 	
 	return self;

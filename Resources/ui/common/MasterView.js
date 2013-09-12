@@ -5,7 +5,7 @@ var createStreamRow = function(item) {
 		var timeParts = dateParts[1].split(':');
 		var datePart = dateParts[0].split('-');
 		return datePart[2] + '/' + datePart[1];
-	}
+	};
 	
 	var leftPos = item.image ? 75 : 5;
 	
@@ -87,37 +87,7 @@ var createStreamRow = function(item) {
 		right : 5
 	});
 	tablerow.add(dateview);
-
-	var scoreview = Ti.UI.createLabel({
-		text : item.score + '  ',
-		textAlign : 'right',
-		backgroundColor : '#555',
-		color : '#fff',
-		font : {
-			fontSize : 10
-		},
-		height : 20,
-		width : 40,
-		right : 0,
-		bottom : 0,
-		backgroundImage : '/images/love-bg-table.png'
-	});
-	tablerow.add(scoreview);
 	
-	var scoreViewA = Ti.UI.createLabel({
-		text : score + '  ',
-		textAlign : 'right',
-		backgroundColor : '#555',
-		color : '#fff',
-		font : {
-			fontSize : 10
-		},
-		height : 20,
-		width : 40,
-		right : 0,
-		bottom : 0,
-		backgroundImage : '/images/love-bg-table.png'
-	});	
 	var loveView = Ti.UI.createView({
 		backgroundColor : '#00aeef',
 		height : 42,
@@ -134,7 +104,7 @@ var createStreamRow = function(item) {
 			backgroundImage : '/images/smile.png',
 			btnid : 'loveButton'
 		});
-	var scoreViewB = Ti.UI.createLabel({
+	var scoreView = Ti.UI.createLabel({
 		text : score,
 		textAlign : 'center',
 		color : '#fff',
@@ -148,13 +118,10 @@ var createStreamRow = function(item) {
 		labelid : "loveLabel"
 	});
 	
-	if(Ti.App.Properties.getString('testAB')==1){
-		loveView.add(scoreViewB);
-		loveView.add(loveButton);
-		tablerow.add(loveView);
-	}else{
-		tablerow.add(scoreViewA);
-	}
+	loveView.add(scoreView);
+	loveView.add(loveButton);
+	tablerow.add(loveView);
+
 	
 	//LOVE BOTTON
 	
@@ -233,7 +200,8 @@ var createStreamRow = function(item) {
 						label : item.title,
 						value : 1
 					});
-					flurry.logEvent('love', {where: "love-schermata-stream"});
+					flurry.logEvent('love', {start: "love-schermata-stream"});
+					tapstream.fireEvent('love', false,{'where': "love-schermata-stream"});
 
 					var data = {
 						link : item.link,
@@ -244,8 +212,7 @@ var createStreamRow = function(item) {
 					};
 					
 					fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
-					scoreViewA.text = String(parseInt(scoreViewA.text)+1);
-					scoreViewB.text = String(parseInt(scoreViewB.text)+1);
+					scoreView.text = String(parseInt(scoreView.text)+1);
 					loveButton.backgroundImage = '/images/smile-disabled.png';
 				});
 			}
@@ -262,8 +229,27 @@ function MasterView() {
 	var self = Ti.UI.createView({
 		backgroundColor : '#fff'
 	});
+	
+	var footerView = Ti.UI.createView({
+		layout : 'horizontal',
+		width : 'auto',
+		height:60,
+		backgroundColor:"#fff"
+	});
 
-	var table = Ti.UI.createTableView();
+	var activityIndicator = Ti.UI.createActivityIndicator({
+	  color: 'black',
+	  message: 'Sto caricando...',
+	  style:Ti.UI.ActivityIndicatorStyle.DARK,
+	  top:16,
+	  left:100,
+	  height:30
+	});
+	footerView.add(activityIndicator);
+
+	var table = Ti.UI.createTableView({
+		footerView:footerView
+	});
 	self.add(table);
 
 	table.addEventListener('click', function(e) {
@@ -278,17 +264,17 @@ function MasterView() {
 
 	var lastDistance = 0;
 	var updating = false;
-
+	
 	table.addEventListener('scroll', function(e) {
-			
+		activityIndicator.show();
 		var offset =  e.firstVisibleItem*75;
 		var height = e.size.height;
 		var total = offset + height + 75;
-		var theEnd = e.totalItemCount*75;
+		var theEnd = e.totalItemCount*75; 
 		var distance = theEnd - total;
 			
 		if (distance < lastDistance) {
-            if (!updating && (total >= theEnd)){
+            if (!updating && (total >= (theEnd-135))){ //135 are the pixel from the bottom where the app start looking for new articles
 				updating = true;
 				self.fireEvent('loadMoreArticles');
 			}
@@ -297,6 +283,7 @@ function MasterView() {
 	});
 
 	self.pageView = 0;
+	
 
 	self.refreshTable = function(data) {
 
@@ -322,7 +309,10 @@ function MasterView() {
 			updating = false;
 		}
 	};
-
+	
+	self.addEventListener('close', function() {
+		self.remove(table);table= null;
+	});
 	return self;
 }
 

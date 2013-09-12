@@ -49,7 +49,7 @@ function CategorieWindow(title) {
 	});
 
 
-	self.loadCategories = function() {
+	(function() {
 		//load dinamically categories from manager
 		var BNselCat = Ti.App.Properties.getString('BNselCat') ? JSON.parse(Ti.App.Properties.getString('BNselCat')) : {};
 		var xhr = Titanium.Network.createHTTPClient();
@@ -138,10 +138,14 @@ function CategorieWindow(title) {
 		xhr.send();
 		//end load categories
 
-	}
+	})();
 	
-	self.loadCategories();
-
+	self.addEventListener('close',function(){
+		contentView.remove(textCategorie);textCategorie=null;
+		containerView.remove(contentView);contentView=null;
+		self.remove(containerView);containerView=null;
+	});
+	
 	return self;
 };
 

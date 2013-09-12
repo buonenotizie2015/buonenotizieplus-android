@@ -18,47 +18,39 @@ function ApplicationTabGroup(Categorie,Stream,Top,Profilo) {
 	
 	var tab1 = Ti.UI.createTab({
 		title: 'Categorie',
-		width:80,
 		heigth:40,
-		icon: '/images/ico_categorie.png',
+		icon: 'images/ico_categorie.png',
 		window: categorieWin,
 	});
+	if(parseInt(version)<3){tab1.icon='images/ico_categorie-white.png';}
 	categorieWin.containingTab = tab1;
 	
 	var tab2 = Ti.UI.createTab({
 		title: 'Notizie',
-		width:80,
 		heigth:40,
-		icon: '/images/ico_stream.png',
+		icon: 'images/ico_stream.png',
 		window: streamWin,
 	});
+	if(parseInt(version)<3){tab2.icon='images/ico_stream-white.png';}
 	streamWin.containingTab = tab2;
 	
 	var tab3 = Ti.UI.createTab({
 		title: 'Più votate',
-		width:80,
 		heigth:40,
-		icon: '/images/ico_top.png',
+		icon: 'images/ico_top.png',
 		window: topWin
 	});
+	if(parseInt(version)<3){tab3.icon='images/ico_top-white.png';}
 	topWin.containingTab = tab3;
 	
 	var tab4 = Ti.UI.createTab({
 		title: 'Profilo',
-		width:80,
 		heigth:40,
-		icon: '/images/ico_profilo.png',
+		icon: 'images/ico_profilo.png',
 		window: profiloWin
 	});
+	if(parseInt(version)<3){tab4.icon='images/ico_profilo-white.png';}
 	profiloWin.containingTab = tab4;
-	
-	streamWin.addEventListener('focus', function(){
-		//categorieWin.loadCategories();
-	});
-	
-	var flexSpace = Titanium.UI.createButton({
-		systemButton:Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
-	});
 	
 	streamWin.addEventListener('focus', function(){
 		if(categorieWin.reloadStream){

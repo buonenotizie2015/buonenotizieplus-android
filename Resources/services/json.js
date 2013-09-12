@@ -82,7 +82,7 @@ exports.loadArticles = function(o, page, tries) {
 	
 	xhr.send(streamData);
 
-}
+};
 
 exports.loadJson = function(o, tries) {
 
@@ -158,7 +158,7 @@ exports.loadJson = function(o, tries) {
 		}
 		xhr.send();
 	}
-}
+};
 
 exports.loadTopJson = function(t, topTries) {
 
@@ -217,4 +217,4 @@ exports.loadTopJson = function(t, topTries) {
 		t.start();
 	}
 	xhrTop.send();
-}
+};

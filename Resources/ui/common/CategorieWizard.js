@@ -72,7 +72,7 @@ function CategorieWizard(title) {
 	});
 
 
-	self.loadCategories = function() {
+	(function() {
 		//load dinamically categories from manager
 		var BNselCat = Ti.App.Properties.getString('BNselCat') ? JSON.parse(Ti.App.Properties.getString('BNselCat')) : {};
 		var xhr = Titanium.Network.createHTTPClient();
@@ -161,13 +161,15 @@ function CategorieWizard(title) {
 		xhr.send();
 		//end load categories
 
-	}
+	})();
 	
-	self.loadCategories();
 	
 	var ProfiloWizard = require('ui/common/ProfiloWizard');
 	buttonWizard.addEventListener('click', function(){
 		new ProfiloWizard("Accedi").open();
+		self.remove(containerView);containerView=null;
+		self.remove(viewWizard);viewWizard=null;
+		self.remove(buttonWizard);buttonWizard=null;
 		self.close();
 	});
 	

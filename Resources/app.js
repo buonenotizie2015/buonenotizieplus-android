@@ -10,6 +10,8 @@ var osname = Ti.Platform.osname,
 
 var flurry = require('sg.flurry');
 	flurry.onStartSession('4VV2TRPJNS9MV3Y32F3J');
+	flurry.setContinueSessionMillis(10000);
+	flurry.setCaptureUncaughtExceptions(true);
 
 var fb = require('facebook');
  fb.appid = 563301893701994;
@@ -32,37 +34,14 @@ GA.debug = false;
 GA.trackUncaughtExceptions = true;
 var tracker = GA.getTracker("UA-9426666-9");
 
-function randomXToY(minVal,maxVal){ 
-	var randVal = minVal+(Math.random()*(maxVal-minVal)); 
-	return Math.round(randVal);
-}
-var random = randomXToY(0,2);
-var testAB = "testAB";
-if(!Ti.App.Properties.getString('testAB')){
-	Ti.App.Properties.setString(testAB,random);
-	Ti.API.info("La variabile AB è stata impostata a "+Ti.App.Properties.getString('testAB'));
-}else{
-	Ti.API.info("La variabile AB era già impostata a "+Ti.App.Properties.getString('testAB'));
-}
-
-if(Ti.App.Properties.getString('testAB')==1){
-	flurry.logEvent('testAB', {tester: '1'});
-	tracker.trackEvent({
-		category: "ABtesting",
-		action: "set-tester",
-		label: "A-smile",
-		value: "1"
-	});
-}else{
-	flurry.logEvent('testAB', {tester: '2'});
-	tracker.trackEvent({
-		category: "ABtesting",
-		action: "set-tester",
-		label: "B-thumb",
-		value: "2"
-	});
-}
-
+var tapstream = require('com.tapstream.sdk');
+var config = {
+    collectDeviceId: true
+};
+tapstream.create("buonenotizie", "wy-Y6mo8Q3OjtTNxDf31QA", config);
+tapstream.fireEvent('install', true, {
+    'system': 'android',
+});
 // This is a single context application with multiple windows in a stack
 (function() {
 
@@ -82,3 +61,5 @@ if(Ti.App.Properties.getString('testAB')==1){
 	}
 
 })();
+
+flurry.onEndSession();

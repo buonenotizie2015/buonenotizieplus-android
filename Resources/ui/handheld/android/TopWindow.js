@@ -33,7 +33,7 @@ function TopWindow(title) {
 				masterView.refreshTable(data);
 			}
 		});
-	}
+	};
 	// load initial rss feed
 	self.refreshTopJSON();
 

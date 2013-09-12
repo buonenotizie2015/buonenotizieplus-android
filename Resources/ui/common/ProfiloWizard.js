@@ -106,6 +106,14 @@ function ProfiloWizard(title) {
 		new ApplicationTabGroup(Categorie, Stream, Top, Profilo).open();	
 	});
 	
+	self.addEventListener('close', function() {
+		self.remove(buttonLater);buttonLater= null;
+		self.remove(fbButton);fbButton= null;
+		self.remove(image);image=null;
+		self.remove(label);label=null;
+	});
+
+	
 	return self;
 };
 

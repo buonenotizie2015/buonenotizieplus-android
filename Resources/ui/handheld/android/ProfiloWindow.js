@@ -110,6 +110,12 @@ function ProfiloWindow(title) {
 			
 	});
 	
+	self.addEventListener('close', function() {
+		self.remove(fbButton);fbButton= null;
+		self.remove(image);image=null;
+		self.remove(label);label=null;
+	});
+	
 	return self;
 };
 
