@@ -8,7 +8,7 @@
     <property name="acs-api-key-development" type="string">mK38XXxUvkn6gMYK6TVSQGVvw1U1UjZ6</property>
     <id>com.BUONENOTIZIE.BuoneNotiziePlus</id>
     <name>BuoneNotiziePlus</name>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <publisher>Buone Notizie Communication Farm Srl</publisher>
     <url>http://www.buonenotizie.it</url>
     <description>BuoneNotizie Plus è la nuova applicazione completamente gratuita per iPhone e iPod Touch che aggrega soltanto le notizie positive.</description>
@@ -28,9 +28,9 @@
     <property name="ti.android.bug2373.finishfalseroot" type="bool">true</property>
     <property name="ti.android.bug2373.message">Applicazione inizializzata, è necessario riavviare.</property>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <tool-api-level>17</tool-api-level>
+        <tool-api-level>19</tool-api-level>
         <manifest android:installLocation="preferExternal"
-            android:versionCode="6" android:versionName="1.0.1">
+            android:versionCode="7" android:versionName="1.0.2">
             <supports-screens android:anyDensity="false"/>
             <compatible-screens>
                 <!-- all small size screens -->
@@ -44,8 +44,8 @@
                 <screen android:screenDensity="hdpi" android:screenSize="normal"/>
                 <screen android:screenDensity="xhdpi" android:screenSize="normal"/>
             </compatible-screens>
-            <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
-            <application android:debuggable="true"
+            <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
+            <application android:debuggable="false"
                 android:hardwareAccelerated="true" android:theme="@style/Theme.Buonenotizie">
                 <activity
                     android:configChanges="keyboardHidden|orientation"
@@ -78,5 +78,5 @@
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.1.1.GA</sdk-version>
+    <sdk-version>3.2.2.GA</sdk-version>
 </ti:app>

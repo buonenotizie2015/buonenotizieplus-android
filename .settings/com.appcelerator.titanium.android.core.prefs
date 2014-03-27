@@ -1,0 +1,10 @@
+android/ATTR_MINIFY=true
+android/ATTR_PROJECT_NAME=buonenotizieplus-android
+android/abi=armeabi-v7a
+android/distribute_path=/Users/yuri_macbook/Desktop
+android/keystore_alias=buonenotizieplus
+android/keystore_password=buone2013
+android/keystore_path=/Users/yuri_macbook/Desktop/*BuoneNotizie Communication/**BuoneNotizie PLUS/android/1.0/buonenotizieplus_keystore
+android/recent_output=/Users/yuri_macbook/Desktop
+android/sdk_version=4.3
+eclipse.preferences.version=1

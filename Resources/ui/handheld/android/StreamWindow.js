@@ -76,7 +76,7 @@ function StreamWindow(title) {
    	banner.addEventListener('click',function(e){
    		var intent = Ti.Android.createIntent({
     		action: Ti.Android.ACTION_VIEW,
-    		data: 'market://details?id=com.BUONENOTIZIE.BuoneNotizie'
+    		data: 'http://www.youtube.com/playlist?list=PLCIVZWq1FAweMYH0a98UNfdisPD8F_Xmm'
 		});
 		Ti.Android.currentActivity.startActivity(intent);
    	
