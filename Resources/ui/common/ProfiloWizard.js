@@ -30,7 +30,8 @@ function ProfiloWizard(title) {
 	var label = Ti.UI.createLabel({
 		text : 'Connetti il tuo profilo su Facebook per votare e condividere le buone notizie',
 		font : {
-			fontSize : 15
+			fontSize : 15,
+			fontFamily : 'Oswald'
 		},
 		color : '#333',
 		height : 'auto',
@@ -91,7 +92,8 @@ function ProfiloWizard(title) {
 		backgroundColor:"#cccccc",
 		backgroundSelectedColor:"#999999",
 		font : {
-			fontSize : 14
+			fontSize : 14,
+			fontFamily : 'Oswald'
 		},
 		height : 50,
 		top: 340,

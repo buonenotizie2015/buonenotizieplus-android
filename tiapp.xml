@@ -8,7 +8,7 @@
     <property name="acs-api-key-development" type="string">mK38XXxUvkn6gMYK6TVSQGVvw1U1UjZ6</property>
     <id>com.BUONENOTIZIE.BuoneNotiziePlus</id>
     <name>BuoneNotiziePlus</name>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <publisher>Buone Notizie Communication Farm Srl</publisher>
     <url>http://www.buonenotizie.it</url>
     <description>BuoneNotizie Plus è la nuova applicazione completamente gratuita per iPhone e iPod Touch che aggrega soltanto le notizie positive.</description>
@@ -30,7 +30,7 @@
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <tool-api-level>19</tool-api-level>
         <manifest android:installLocation="preferExternal"
-            android:versionCode="7" android:versionName="1.0.2">
+            android:versionCode="8" android:versionName="1.0.3">
             <supports-screens android:anyDensity="false"/>
             <compatible-screens>
                 <!-- all small size screens -->

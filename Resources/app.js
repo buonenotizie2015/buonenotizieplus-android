@@ -32,7 +32,7 @@ var GA = require('analytics.google');
 //GA.optOut = true;
 GA.debug = false;
 GA.trackUncaughtExceptions = true;
-var tracker = GA.getTracker("UA-9426666-9");
+var tracker = GA.getTracker("UA-9426666-8");
 
 var tapstream = require('com.tapstream.sdk');
 var config = {

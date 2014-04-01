@@ -28,7 +28,8 @@ function CategorieWindow(title) {
 		textAlign : 'center',
 		color : '#333',
 		font : {
-			fontSize : 16
+			fontSize : 16,
+			fontFamily : 'EgyptienneFLTStd-Roman'
 		},
 		height : 40,
 		top : 0,
@@ -92,7 +93,7 @@ function CategorieWindow(title) {
 					backgroundColor : 'transparent',
 					font : {
 						fontSize : 18,
-						fontFamily : 'Georgia',
+						fontFamily : 'EgyptienneFLTStd-Bold',
 						fontWeight : 'bold'
 					},
 					left : 30,

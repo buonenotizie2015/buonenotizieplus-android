@@ -39,7 +39,7 @@ var createStreamRow = function(item) {
 		text: item.category,
 		color: '#000',
 		height:16,
-		font: {fontSize: 12, fontWeight: 'bold'},
+		font: {fontSize: 12, fontWeight: 'bold', fontFamily : 'EgyptienneFLTStd-Bold'},
 		left:2, 
 		width:'auto'
 	});
@@ -51,7 +51,7 @@ var createStreamRow = function(item) {
 		height:16,
 		verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
 		left:0,
-		font: {fontSize: 12, fontWeight: 'bold', fontFamily: 'Georgia'},
+		font: {fontSize: 12, fontWeight: 'bold', fontFamily : 'Oswald'},
 		width: 'auto'
 	});
 	
@@ -67,6 +67,7 @@ var createStreamRow = function(item) {
 		color : '#000',
 		height : 50,
 		font : {
+			fontFamily : 'EgyptienneFLTStd-Roman',
 			fontSize : 12
 		},
 		top : 20,

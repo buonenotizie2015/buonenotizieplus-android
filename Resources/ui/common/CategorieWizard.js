@@ -29,7 +29,8 @@ function CategorieWizard(title) {
 		textAlign : 'center',
 		color : '#333',
 		font : {
-			fontSize : 16
+			fontSize : 16,
+			fontFamily : 'EgyptienneFLTStd-Roman'
 		},
 		height : 40,
 		top : 0,
@@ -50,7 +51,8 @@ function CategorieWizard(title) {
 		backgroundColor:"#00aeef",
 		backgroundSelectedColor:"#0090c6",
 		font : {
-			fontSize : 14
+			fontSize : 14,
+			fontFamily : 'Oswald'
 		},
 		height : 40,
 		bottom : 10,
@@ -115,7 +117,7 @@ function CategorieWizard(title) {
 					backgroundColor : 'transparent',
 					font : {
 						fontSize : 18,
-						fontFamily : 'Georgia',
+						fontFamily : 'EgyptienneFLTStd-Bold',
 						fontWeight : 'bold'
 					},
 					left : 30,

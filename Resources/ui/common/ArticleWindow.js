@@ -1,6 +1,13 @@
 //Detail View Component Constructor
 function ArticleWindow() {
 	var DetailView = require('ui/common/DetailView');
+	
+	var parseYMDdate = function(dateString) {
+		var dateParts = dateString.split(' ');
+		var timeParts = dateParts[1].split(':');
+		var datePart = dateParts[0].split('-');
+		return datePart[0] + '-' + datePart[1] + '-' + datePart[2];
+	};
 
 	var self = Ti.UI.createWindow({
 		backgroundColor : '#fff',
@@ -45,7 +52,7 @@ function ArticleWindow() {
 		font : {
 			fontSize : 14,
 			fontWeight : 'bold',
-			fontFamily : 'Georgia'
+			fontFamily : 'EgyptienneFLTStd-Bold'
 		},
 		left : 0,
 		top : 10,
@@ -70,7 +77,7 @@ function ArticleWindow() {
 		color : '#000',
 		font : {
 			fontSize : 14,
-			fontFamily : 'Helvetica',
+			fontFamily : 'EgyptienneFLTStd-Roman'
 		},
 		top : 20,
 		left : 0,
@@ -86,7 +93,7 @@ function ArticleWindow() {
 		left : 0,
 		right : 0,
 		font : {
-			fontFamily : 'Helvetica',
+			fontFamily : 'EgyptienneFLTStd-Roman'
 			/*fontWeight: 'normal',
 			 fontSize: 14*/
 		},
@@ -293,19 +300,19 @@ function ArticleWindow() {
 			datafacebook = {
 				text : 'Ecco una buona notizia! "' + article.title + '" via #BuoneNotizie Plus @BuoneNotizie.it ',
 				image : article.image,
-				url : article.link,
+				url : "http://taps.io/scarica-buonenotizieplus",
 				title: article.title
 			};
 			
 			datatweet = {
 				text : article.title + ' | via #BuoneNotizie Plus @BuoneNotizie_it ',
 				image : article.image,
-				url : article.link
+				url : "http://taps.io/scarica-buonenotizieplus"
 			};
 			
 			datatoemail = {
 				subject : 'Finalmente buone notizie! "' + article.title + '"',
-				text:'Ho trovato una buona notizia! Forse può interessarti:<br/><b>'+article.title+'</b><br/><br/>'+article.link+'<br/><br/>Tramite <b>BuoneNotizie Plus</b>, il primo aggregatore di notizie positive!<br/>Scaricalo gratis anche tu da AppStore o Google Play<br/>http://onelink.to/drb5h9'
+				text:'Ho trovato una buona notizia! Forse può interessarti:<br/><b>'+article.title+'</b><br/><br/>'+article.link+'<br/><br/>Tramite <b>BuoneNotizie Plus</b>, il primo aggregatore di notizie positive!<br/>Scaricalo gratis anche tu da AppStore o Google Play<br/>http://taps.io/scarica-buonenotizieplus'
 			};
 		
 		var ExygySocialShare = require("com.exygy.socialshare");
@@ -380,11 +387,16 @@ function ArticleWindow() {
 		facebookShare=null;
 		twitterShare=null;
 		mailShare=null;
+		
+		title = article.title;
+		categoria = article.parentCategory;
+		editore = article.category;
+		data = parseYMDdate(article.pubDate);
 	};
 
 	self.addEventListener('focus', function() {
-		flurry.onPageView(titleArticle.text);
-		tracker.trackScreen(titleArticle.text);
+		flurry.onPageView(data+"/"+categoria+"/"+editore+"/"+title);
+		tracker.trackScreen(data+"/"+categoria+"/"+editore+"/"+title);
 	});
 	
 	if(parseInt(version)>=3){
